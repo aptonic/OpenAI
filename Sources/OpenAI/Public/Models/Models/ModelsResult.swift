@@ -13,5 +13,5 @@ public struct ModelsResult: Codable, Equatable {
     /// A list of model objects.
     public let data: [ModelResult]
     /// The object type, which is always `list`
-    public let object: String
+    public let object: String?
 }
