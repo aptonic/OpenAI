@@ -18,11 +18,14 @@ public struct ModelResult: Codable, Equatable {
     public let object: String?
     /// The organization that owns the model.
     public let ownedBy: String?
+    /// Friendly name
+    public let displayName: String?
 
     public enum CodingKeys: String, CodingKey {
         case id
         case created
         case object
         case ownedBy = "owned_by"
+        case displayName = "display_name"
     }
 }
