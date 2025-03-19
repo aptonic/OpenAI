@@ -15,7 +15,7 @@ public struct ModelResult: Codable, Equatable {
     /// The Unix timestamp (in seconds) when the model was created.
     public let created: TimeInterval?
     /// The object type, which is always "model".
-    public let object: String
+    public let object: String?
     /// The organization that owns the model.
     public let ownedBy: String
 
