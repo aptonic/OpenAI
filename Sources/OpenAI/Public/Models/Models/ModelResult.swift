@@ -14,7 +14,7 @@ public struct ModelResult: Codable, Equatable {
     public let object: String?
     public let ownedBy: String?
     public let displayName: String?
-    public let supportsVision: Bool?  // New property
+    public let supportsVision: Bool?  // Optional property
 
     enum CodingKeys: String, CodingKey {
         case id, created, object, ownedBy = "owned_by", displayName = "display_name", modelSpec = "model_spec"
@@ -41,6 +41,21 @@ public struct ModelResult: Codable, Equatable {
             supportsVision = try? capabilitiesContainer.decode(Bool.self, forKey: .supportsVision)
         } else {
             supportsVision = nil
+        }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(created, forKey: .created)
+        try container.encode(object, forKey: .object)
+        try container.encode(ownedBy, forKey: .ownedBy)
+        try container.encode(displayName, forKey: .displayName)
+        
+        if let supportsVision = supportsVision {
+            var modelSpecContainer = container.nestedContainer(keyedBy: ModelSpecCodingKeys.self, forKey: .modelSpec)
+            var capabilitiesContainer = modelSpecContainer.nestedContainer(keyedBy: CapabilitiesCodingKeys.self, forKey: .capabilities)
+            try capabilitiesContainer.encode(supportsVision, forKey: .supportsVision)
         }
     }
 }
